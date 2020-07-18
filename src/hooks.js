@@ -7,7 +7,8 @@ export const useAnimatedScale = (scGap = 0.02, delay = 20) => {
     return {
         scale, 
         start() {
-            if (!animated) {
+            const interval = setInterval(() => {
+              if (!animated) {
                 setAnimated(true)
                 let currScale = scale 
                 if (!animated) {
@@ -20,6 +21,7 @@ export const useAnimatedScale = (scGap = 0.02, delay = 20) => {
                     }
                 }
             }
+            }, delay)
         }
     }
 }
