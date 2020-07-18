@@ -3,25 +3,24 @@ import {divideScale, sinify} from './util'
 
 export const useAnimatedScale = (scGap = 0.02, delay = 20) => {
     const [scale, setScale] = useState(0)
-    const [animated, setAnimated] = useState(0)
+    const [animated, setAnimated] = useState(false)
     return {
         scale, 
         start() {
+          if (!animated) {
+            setAnimated(true)
+            let currScale = scale 
             const interval = setInterval(() => {
-              if (!animated) {
-                setAnimated(true)
-                let currScale = scale 
-                if (!animated) {
-                    currScale += scGap 
-                    setScale(currScale)
-                    if (currScale > 1) {
-                        setScale(0)
-                        setAnimated(false)
-                        clearInterval(interval)
-                    }
+                currScale += scGap 
+                setScale(currScale)
+                if (currScale > 1) {
+                    setScale(0)
+                    setAnimated(false)
+                    clearInterval(interval)
                 }
-            }
+            
             }, delay)
+          }
         }
     }
 }
@@ -61,7 +60,7 @@ export const useStyle = (w, h, scale) => {
             const height = `${size}px`
             const dx = (w / 2 - size) * (sf1 - sf3) * si
             const left = `${w / 2 - size + size * i - dx}px`
-            const top = `${h / 2 - size - (h / 2 - size) * sf1}px`
+            const top = `${h / 2 - size - (h / 2 - size) * sf2}px`
             return {
                 position, 
                 background,
